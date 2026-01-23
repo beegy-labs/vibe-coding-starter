@@ -1,0 +1,31 @@
+{
+  "name": "vibe-coding-starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo template for aggressive LLM delegation (CDD, SDD, ADD)",
+  "author": "beegy",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "sync:protocol": "scripts/sync-protocol.sh",
+    "sync:protocol:check": "scripts/sync-protocol.sh --check",
+    "docs:generate": "node --experimental-strip-types scripts/docs/generate.ts",
+    "docs:translate": "node --experimental-strip-types scripts/docs/translate.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prettier": "^3.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
