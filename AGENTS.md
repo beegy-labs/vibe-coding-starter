@@ -5,7 +5,7 @@
 ## Entry Point
 
 1. Read `.ai/README.md` first (project overview)
-2. Check `.specs/{service}/index.md` for current work
+2. Check `.specs/{app-name}/roadmap.md` for current work
 
 ## Quick Rules
 

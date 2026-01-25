@@ -8,7 +8,7 @@
 User: "Implement X"
     |
     v
-Read .specs/{target}/roadmap.md
+Read .specs/{app-name}/roadmap.md
     |
     v
 Check scopes/ for scope

@@ -5,7 +5,7 @@
 ## Quick Flow
 
 ```
-1. Read .specs/{target}/roadmap.md
+1. Read .specs/{app-name}/roadmap.md
 2. Check scopes/ for current scope
 3. Read tasks/{scope}/ for plan
 4. No tasks? -> Ask: "Create task plan?"

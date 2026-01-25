@@ -27,34 +27,37 @@ tasks/{scope}/  Human requests -> LLM generates (plan)
 
 ## Directory
 
+SDD specs are organized by **app/solution unit** (not monorepo structure).
+One spec = one complete application (may span multiple packages).
+
 ```
-.specs/{target}/
+.specs/{app-name}/
 +-- roadmap.md
 +-- scopes/
-|   +-- 2026-scope1.md
+|   +-- 2026-S1.md
 +-- tasks/
-|   +-- 2026-scope1/
+|   +-- 2026-S1/
 |       +-- index.md
-|       +-- 01-task-a.md
-|       +-- 02-task-b.md
+|       +-- 01-backend.md   # Target: services/
+|       +-- 02-frontend.md  # Target: apps/
 +-- history/
 ```
 
 ## Workflow
 
 ```
-L1: [Human] "Building mail service with login, signup, send, receive"
-    [LLM] -> roadmap.md
+L1: [Human] "Building todo app with React frontend and Python API"
+    [LLM] -> .specs/todo-app/roadmap.md
 
-L2: [Human] "Signup first. Google + native login"
-    [LLM] -> scopes/2026-scope1.md
+L2: [Human] "First scope: basic CRUD for both frontend and backend"
+    [LLM] -> scopes/2026-S1.md
 
-L3: [Human] "Use Google Auth, get name/email. Plan with parallel/sequential"
-    [LLM] -> tasks/2026-scope1/
+L3: [Human] "Plan with parallel tasks for backend/frontend, then integration"
+    [LLM] -> tasks/2026-S1/
             - index.md (status, deps)
-            - 01-google-auth.md (parallel)
-            - 02-native-auth.md (parallel)
-            - 03-integration.md (sequential)
+            - 01-backend.md (Target: services/, parallel)
+            - 02-frontend.md (Target: apps/, parallel)
+            - 03-integration.md (sequential, after 01+02)
 
 [Human] "Approved" -> Execute
         "Revise X" -> LLM revises
@@ -68,16 +71,22 @@ Execute -> Success -> Archive + CDD update
 ### roadmap.md
 
 ```markdown
-# Roadmap: {Service}
+# Roadmap: {App Name}
+
+## Tech Stack
+| Layer | Tech | Location |
+|-------|------|----------|
+| Frontend | React | apps/ |
+| Backend | Python | services/ |
 
 | Feature | Priority | Status |
 |---------|----------|--------|
-| Login | P0 | Planned |
-| Signup | P0 | Planned |
+| CRUD API | P0 | Planned |
+| UI | P0 | Planned |
 
 | Scope | Features | Target |
 |-------|----------|--------|
-| 2026-S1 | Signup | Q1 |
+| 2026-S1 | Basic CRUD | Q1 |
 ```
 
 ### scopes/{id}.md
@@ -100,16 +109,16 @@ Execute -> Success -> Archive + CDD update
 ### tasks/{scope}/index.md
 
 ```markdown
-# Tasks: 2026-Scope1
+# Tasks: 2026-S1
 
 ## Status
 | Total | Done | Progress | Pending |
 |-------|------|----------|---------|
-| 4 | 0 | 0 | 4 |
+| 3 | 0 | 0 | 3 |
 
 ## Dependencies
 [01] --+
-       +--> [03] --> [04]
+       +--> [03]
 [02] --+
 
 ## Parallel Groups
@@ -117,32 +126,33 @@ Execute -> Success -> Archive + CDD update
 |-------|-------|-------|
 | A | 01,02 | Now |
 | B | 03 | After A |
-| C | 04 | After B |
 
 ## Summary
-| # | Task | Depends | Status |
-|---|------|---------|--------|
-| 01 | Google Auth | - | Pending |
-| 02 | Native Auth | - | Pending |
-| 03 | Integration | 01,02 | Blocked |
+| # | Task | Target | Depends | Status |
+|---|------|--------|---------|--------|
+| 01 | Backend | services/ | - | Pending |
+| 02 | Frontend | apps/ | - | Pending |
+| 03 | Integration | apps/ | 01,02 | Blocked |
 ```
 
 ### tasks/{scope}/{nn}-{name}.md
 
 ```markdown
-# Task 01: Google Auth
+# Task 01: Backend Setup
+
+> Target: services/example-service/
 
 ## Steps
-### Phase 1 (Parallel)
-- [ ] Create OAuth credentials
+### Phase 1 (Setup)
+- [ ] Create project structure
 - [ ] Add dependencies
 
-### Phase 2 (Sequential)
-- [ ] Implement callback
-- [ ] Store user info
+### Phase 2 (Implementation)
+- [ ] Create endpoints
+- [ ] Add database
 
 ## Verify
-pnpm test src/auth/
+pnpm --filter example-service test
 
 ## Done
 - [ ] Steps complete

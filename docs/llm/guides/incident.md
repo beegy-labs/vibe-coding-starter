@@ -60,7 +60,7 @@ attempt_3: Run tests
 
 ## Action Required
 - [ ] CDD: Add pattern to docs/llm/
-- [ ] SDD: Clarify in .specs/{target}/scopes/
+- [ ] SDD: Clarify in .specs/{app-name}/scopes/
 
 ## After Update
 Restart from Step X

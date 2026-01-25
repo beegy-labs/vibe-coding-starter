@@ -4,41 +4,44 @@
 
 ## Overview
 
-Node.js backend service with PostgreSQL
+Python backend service with FastAPI + SQLModel
 
 ## Tech Stack
 
 | Tech | Purpose |
 |------|---------|
-| Node.js 20+ | Runtime |
-| TypeScript | Language |
-| Prisma | ORM |
-| PostgreSQL | Database |
+| Python 3.11+ | Runtime |
+| FastAPI | Framework |
+| SQLModel | ORM |
+| SQLite | Database (dev) |
 
 ## Structure
 
 ```
-services/example-service/
-+-- src/{controllers,services,repositories}/
-+-- prisma/schema.prisma
-+-- Dockerfile
+services/example-service/src/
++-- main.py        # FastAPI app entry
++-- models/        # SQLModel models
++-- db/            # Database setup
++-- api/routes/    # API endpoints
 ```
 
 ## Commands
 
 ```bash
-pnpm --filter example-service dev
-pnpm --filter example-service build
+pnpm --filter example-service dev    # localhost:8000
 pnpm --filter example-service test
 ```
 
 ## Endpoints
 
-| Method | Path |
-|--------|------|
-| GET | /health |
-| GET | /api/v1/* |
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /health | Health check |
+| GET | /todos | List todos |
+| POST | /todos | Create todo |
+| PATCH | /todos/:id | Update todo |
+| DELETE | /todos/:id | Delete todo |
 
 ## Current Work
 
-See `.specs/services/example-service/index.md`
+See `.specs/example-todo/tasks/2026-S1/` (Task 01)

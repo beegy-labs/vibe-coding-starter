@@ -43,12 +43,12 @@ AGENTS.md -> CLAUDE.md / GEMINI.md -> .ai/workflows/
 User: "Implement X"
     |
     v
-Read .specs/{service}/index.md
+Read .specs/{app-name}/roadmap.md
     |
     v
 Keyword search
     |
-    +-> Found -> Read spec -> Implement
+    +-> Found -> Read tasks/{scope}/ -> Implement
     +-> Not found -> "[!] Create spec first?"
 ```
 
@@ -143,7 +143,7 @@ Task done -> Extract patterns -> Update CDD -> Future agents benefit
 ```markdown
 ## Entry
 1. Read .ai/README.md
-2. Check .specs/{service}/index.md
+2. Check .specs/{app-name}/roadmap.md
 
 ## Rules
 - No direct commit to main

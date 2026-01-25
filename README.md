@@ -161,16 +161,18 @@ Execute --> Success --> Archive + Update CDD
 
 ### Directory Structure
 
+SDD specs are organized by **app/software unit**, not by monorepo structure:
+
 ```
-.specs/{target}/
+.specs/{app-name}/          # One app = one spec (may span multiple packages)
 +-- roadmap.md              # L1: Big picture
 +-- scopes/
-|   +-- 2026-scope1.md      # L2: Scope definition
+|   +-- 2026-S1.md          # L2: Scope definition
 +-- tasks/
-|   +-- 2026-scope1/        # L3: Task plans
+|   +-- 2026-S1/            # L3: Task plans
 |       +-- index.md        # Status, dependencies
-|       +-- 01-task-a.md    # Individual tasks
-|       +-- 02-task-b.md
+|       +-- 01-backend.md   # -> services/
+|       +-- 02-frontend.md  # -> apps/
 +-- history/                # Completed (90-day retention)
 ```
 
@@ -198,14 +200,14 @@ Before implementing, agent MUST check for existing spec:
 User: "Implement X"
          |
          v
-Read .specs/{service}/index.md
+Read .specs/{app-name}/roadmap.md
          |
     +----+----+
     |         |
  Found     Not Found
     |         |
     v         v
- Implement  "[!] Create spec first?"
+ Read tasks/  "[!] Create spec first?"
 ```
 
 ### Execution Modes
@@ -248,11 +250,11 @@ vibe-coding-starter/
 |   +-- services/            # Service context
 |   +-- apps/                # App context
 |
-+-- .specs/                  # SDD (3-layer structure)
-|   +-- {target}/
++-- .specs/                  # SDD (3-layer structure, per app)
+|   +-- {app-name}/          # One spec per app/software
 |       +-- roadmap.md       # L1: Big picture
 |       +-- scopes/          # L2: Scope definitions
-|       +-- tasks/           # L3: Task plans
+|       +-- tasks/           # L3: Task plans (may span packages)
 |       +-- history/         # Completed archive
 |
 +-- docs/llm/                # CDD Tier 2 (SSOT, <=300 lines)
@@ -290,21 +292,22 @@ cd my-project
 pnpm install
 ```
 
-### 2. Configure Agent
+### 2. Configure Agent (Claude Code)
 
+Open Claude Code in the project directory:
 ```bash
-# For Claude Code
-cp CLAUDE.md.example CLAUDE.md
+claude
+```
 
-# For Gemini CLI
-cp GEMINI.md.example GEMINI.md
+Then configure CLAUDE.md:
+```
+Read @AGENTS.md and create CLAUDE.md for this project.
 ```
 
 ### 3. Start Development
 
-Tell your LLM agent:
 ```
-@.ai/README.md Read project context first.
+Read @.ai/README.md first.
 ```
 
 ### 4. Create Your First Spec
@@ -313,6 +316,65 @@ Tell your LLM agent:
 Human: "I'm building a user service with login, signup, profile management"
 LLM:   --> Creates .specs/services/user-service/roadmap.md
 ```
+
+---
+
+## Claude Code Quick Commands
+
+### Setup
+
+```bash
+# Open Claude Code
+claude
+
+# Then configure (inside Claude Code)
+> Read @AGENTS.md and create CLAUDE.md for this project.
+```
+
+### Run Example (Todo App)
+
+Pre-built specs are available in `.specs/example-todo/`. Execute with Claude Code:
+
+```bash
+# 1. Read context and specs
+claude "Read @.ai/README.md and @.specs/example-todo/roadmap.md"
+
+# 2. Implement all tasks
+claude "Implement tasks in @.specs/example-todo/tasks/2026-S1/"
+
+# 3. Run the stack
+pnpm --filter example-service dev  # localhost:8000
+pnpm --filter example-app dev      # localhost:5173
+
+# 4. After completion: Archive and update CDD
+claude "Archive completed tasks to history/ and update CDD with new patterns."
+```
+
+### Create New Spec
+
+```bash
+# L1: Roadmap - Human explains, LLM documents
+claude "I want to build a payment app with Stripe integration. Create roadmap in .specs/payment-app/"
+
+# L2: Scope - Human explains scope, LLM documents
+claude "First scope: basic checkout flow. Create scope."
+
+# L3: Tasks - Human requests plan, LLM generates
+claude "Plan the checkout implementation with parallel/sequential tasks."
+
+# Execute approved tasks
+claude "Implement tasks in @.specs/payment-app/tasks/2026-S1/"
+```
+
+### Workflow Commands
+
+| Command | Description |
+|---------|-------------|
+| `claude "@.ai/README.md"` | Load project context |
+| `claude "Implement @.specs/{app-name}/tasks/{scope}/"` | Execute task plan |
+| `claude "Archive and update CDD"` | Post-completion: archive + extract patterns |
+| `claude "Review PR #123"` | Code review |
+| `claude "What's the status of current tasks?"` | Check progress |
 
 ---
 

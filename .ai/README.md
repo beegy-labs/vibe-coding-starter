@@ -7,14 +7,14 @@
 | Layer | Tech |
 |-------|------|
 | Frontend | React, TypeScript |
-| Backend | Node.js, Rust |
-| DB | PostgreSQL, ClickHouse, Valkey |
+| Backend | Python, Node.js |
+| DB | PostgreSQL, SQLite |
 
 ## Navigation
 
 | Action | Read |
 |--------|------|
-| Current work | `.specs/{target}/tasks/` |
+| Current work | `.specs/{app-name}/tasks/` |
 | Patterns | `docs/llm/policies/` |
 | Workflows | `.ai/workflows/` |
 
