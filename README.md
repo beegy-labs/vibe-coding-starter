@@ -187,6 +187,7 @@ Tell Claude Code what you want to build:
 I want to build a hash utility service.
 Features: SHA256 hash generation, input validation.
 Tech stack: Rust with Axum.
+Implementation target: services/hash-service/
 Create the roadmap in .specs/hash-service/
 ```
 
@@ -216,22 +217,26 @@ Create tasks in .specs/hash-service/tasks/2026-S1/
 Review the generated specs, then:
 
 ```
-Approved. Implement all tasks.
+Approved. Implement all tasks in services/hash-service/.
 ```
+
+Note: Backend code goes to `services/`, frontend code goes to `apps/`.
 
 **Step 6: Verify Results**
 
 After implementation:
 
 ```bash
+cd services/hash-service
+
 # Run tests
 cargo test
 
 # Start server
 cargo run
 
-# Test endpoint
-curl "http://localhost:8080/hash?input=hello"
+# Test endpoint (in another terminal)
+curl "http://localhost:3000/hash?input=hello"
 ```
 
 **Step 7: Complete the Cycle (Archive + CDD Update)**
@@ -255,7 +260,7 @@ Note: Only **generalized, reusable patterns** belong in CDD. Task-specific detai
 | Create roadmap | `I want to build X. Create roadmap in .specs/X/` |
 | Define scope | `First scope: Y. Create scope.` |
 | Generate tasks | `Plan implementation with parallel/sequential tasks.` |
-| Execute | `Approved. Implement all tasks.` |
+| Execute | `Approved. Implement all tasks in services/X/.` |
 | Archive | `Move completed tasks to history/{scope}/` |
 | Update CDD | `Extract reusable patterns and update docs/llm/ (guides or references)` |
 
