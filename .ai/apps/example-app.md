@@ -4,46 +4,40 @@
 
 ## Overview
 
-React-based frontend application
+React frontend application
 
 ## Tech Stack
 
-- React 18+
-- TypeScript
-- Vite
-- TailwindCSS
+| Tech | Purpose |
+|------|---------|
+| React 18+ | UI |
+| TypeScript | Language |
+| Vite | Build |
+| TailwindCSS | Style |
 
-## Directory Structure
+## Structure
 
 ```
 apps/example-app/
-├── src/
-│   ├── components/     # UI components
-│   ├── pages/          # Page components
-│   ├── hooks/          # Custom hooks
-│   ├── services/       # API calls
-│   ├── stores/         # State management
-│   └── utils/          # Utilities
-├── public/
-├── package.json
-└── vite.config.ts
++-- src/{components,pages,hooks,services,stores}/
++-- public/
++-- vite.config.ts
 ```
 
 ## Commands
 
 ```bash
-pnpm --filter example-app dev      # Dev server
-pnpm --filter example-app build    # Build
-pnpm --filter example-app test     # Test
+pnpm --filter example-app dev
+pnpm --filter example-app build
+pnpm --filter example-app test
 ```
 
-## API Integration
+## API
 
 ```typescript
-// Communicates with services/example-service
 const API_BASE = import.meta.env.VITE_API_URL;
 ```
 
-## Current Focus
+## Current Work
 
-- See `.specs/apps/example-app/scopes/2026-Q1.md`
+See `.specs/apps/example-app/tasks/`

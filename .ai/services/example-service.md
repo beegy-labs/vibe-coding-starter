@@ -1,56 +1,44 @@
 # Example Service Context
 
-> CDD Tier 1 - Service Context
+> Tier 1 - Service Context
 
 ## Overview
 
-Node.js-based backend service
+Node.js backend service with PostgreSQL
 
 ## Tech Stack
 
-- Node.js 20+
-- TypeScript
-- Express / Fastify
-- Prisma (ORM)
-- PostgreSQL
+| Tech | Purpose |
+|------|---------|
+| Node.js 20+ | Runtime |
+| TypeScript | Language |
+| Prisma | ORM |
+| PostgreSQL | Database |
 
-## Directory Structure
+## Structure
 
 ```
 services/example-service/
-├── src/
-│   ├── controllers/    # Request handlers
-│   ├── services/       # Business logic
-│   ├── repositories/   # Data access
-│   ├── middleware/     # Middleware
-│   ├── utils/          # Utilities
-│   └── index.ts        # Entry point
-├── prisma/
-│   └── schema.prisma   # DB schema
-├── package.json
-└── Dockerfile
++-- src/{controllers,services,repositories}/
++-- prisma/schema.prisma
++-- Dockerfile
 ```
 
 ## Commands
 
 ```bash
-pnpm --filter example-service dev      # Dev server
-pnpm --filter example-service build    # Build
-pnpm --filter example-service test     # Test
-pnpm --filter example-service prisma:generate  # Generate Prisma client
+pnpm --filter example-service dev
+pnpm --filter example-service build
+pnpm --filter example-service test
 ```
 
-## API Endpoints
+## Endpoints
 
-| Method | Path         | Description  |
-| ------ | ------------ | ------------ |
-| GET    | /health      | Health check |
-| GET    | /api/v1/...  | API endpoints |
+| Method | Path |
+|--------|------|
+| GET | /health |
+| GET | /api/v1/* |
 
-## Environment Variables
+## Current Work
 
-```bash
-DATABASE_URL=postgresql://...
-PORT=3000
-NODE_ENV=development
-```
+See `.specs/services/example-service/index.md`
