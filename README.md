@@ -2,24 +2,39 @@
 
 > Enterprise-grade LLM-driven development template for senior developers
 
-**A template for small teams of senior/lead developers to manage N projects with minimal headcount**
+---
 
-## Why Vibe Coding?
+## 1. The Vision
+
+### The Problem
 
 ```
-Traditional:  1 Project = 5-10 Developers
-Vibe Coding:  N Projects = 2-3 Senior Developers + LLM Agents
+Traditional Development:
+  1 Project = 5-10 Developers
+  - Extensive documentation overhead
+  - Communication bottlenecks
+  - Context switching costs
+```
+
+### The Solution
+
+```
+Vibe Coding:
+  N Projects = 2-3 Senior Developers + LLM Agents
+  - LLM handles documentation
+  - Human focuses on decisions
+  - Scalable across projects
 ```
 
 ### Core Philosophy
 
 ```
-Human = Commander (Direction + Approval)
+Human = Commander
   - Explains what to build (not how)
   - Reviews and approves plans
   - Judges quality, makes decisions
 
-LLM = Executor (Documentation + Implementation)
+LLM = Executor
   - Writes all documentation
   - Generates task plans
   - Implements approved tasks
@@ -28,386 +43,227 @@ LLM = Executor (Documentation + Implementation)
 
 ### Target Audience
 
-| Role | Responsibility | Projects |
-|------|----------------|----------|
+| Role | Responsibility | Concurrent Projects |
+|------|----------------|---------------------|
 | **Tech Lead** | Architecture, direction | 3-5 |
 | **Senior Dev** | Review, quality | 2-3 |
-| **Platform Engineer** | Infrastructure, GitOps | Platform |
+| **Platform Engineer** | Infrastructure, GitOps | Platform-wide |
 
 ---
 
-## Methodology: CDD + SDD + ADD
+## 2. The Core Engine
 
-Three integrated methodologies for LLM-driven development:
+Three integrated methodologies power LLM-driven development:
 
 ```
 CDD (Context)  -->  SDD (Specs)  -->  ADD (Execute)
     HOW               WHAT              DO
-    |                  |                 |
-    v                  v                 v
- Patterns          Task Plans        Implementation
- Knowledge         Roadmaps          Autonomous
- Context           Scopes            Supervised
 ```
 
-| Phase | Methodology | Focus | Human Role | LLM Role |
-|-------|-------------|-------|------------|----------|
-| 1 | **CDD** | HOW (patterns) | Define patterns | Document, load |
-| 2 | **SDD** | WHAT (tasks) | Explain, approve | Document, plan |
-| 3 | **ADD** | DO (execute) | Approve, judge | Implement |
+### CDD (Context-Driven Development)
+
+**Goal**: Provide LLM agents with consistent patterns and project knowledge.
+
+**Role**: Constitution of knowledge. Defines HOW agents should work through a 4-Tier documentation structure.
+
+**Key Principle**: Token efficiency - deliver maximum value per token consumed.
+
+> Details: [docs/llm/policies/cdd.md](docs/llm/policies/cdd.md)
+
+### SDD (Spec-Driven Development)
+
+**Goal**: Transform human's ambiguous ideas into clear, executable specs.
+
+**Role**: Human-commanded staged development. Defines WHAT to build through 3 layers:
+- L1 Roadmap: Big picture
+- L2 Scope: Implementation boundaries
+- L3 Tasks: Executable work items
+
+**Key Principle**: Human explains, LLM writes. Never the reverse.
+
+> Details: [docs/llm/policies/sdd.md](docs/llm/policies/sdd.md)
+
+### ADD (Agent-Driven Development)
+
+**Goal**: Enable autonomous execution while maintaining human control.
+
+**Role**: Spec-first validation and self-resolution. Defines HOW agents execute approved tasks.
+
+**Key Principle**: Spec-first - always check for existing specs before implementing.
+
+> Details: [docs/llm/policies/add.md](docs/llm/policies/add.md)
 
 ---
 
-## CDD (Context-Driven Development)
+## 3. The Blueprint
 
-> Constitution of Knowledge for LLM agents
-
-CDD defines HOW LLM agents should work - patterns, conventions, context management.
-
-### 4-Tier Structure
-
-```
-Tier 1: .ai/           --> Tier 2: docs/llm/  --> Tier 3: docs/en/  --> Tier 4: docs/{locale}/
-[Pointers, <=50 lines]    [SSOT, <=300 lines]    [Generated]           [Translated]
-[LLM-only]                [LLM-only]             [Human-readable]      [Human-readable]
-```
-
-| Tier | Path | Purpose | Editable | Audience |
-|------|------|---------|----------|----------|
-| 1 | `.ai/` | Quick pointers | Yes | LLM |
-| 2 | `docs/llm/` | Full specs (SSOT) | Yes | LLM |
-| 3 | `docs/en/` | Human docs | No (generated) | Human |
-| 4 | `docs/{locale}/` | Translations | No (generated) | Human |
-
-### Key Principles
-
-1. **Token Efficiency**: Deliver more value per token
-2. **Index-First**: Every directory has index.md for navigation
-3. **ASCII-Only**: Tier 1-2 use ASCII only (no unicode)
-4. **40% Budget**: Keep context under 40% of window
-
-### Edit Flow
-
-```
-Human/LLM edits Tier 1/2 (SSOT)
-         |
-         v
-    [batch job]
-         |
-         v
-   Tier 3 generated (docs/en/)
-         |
-         v
-   Tier 4 translated (docs/{locale}/)
-```
-
-**Never edit Tier 3/4 directly** - they will be overwritten.
-
----
-
-## SDD (Spec-Driven Development)
-
-> Human-commanded staged development
-
-SDD defines WHAT to build through a 3-layer structure where **Human explains, LLM writes**.
-
-### 3-Layer Structure
-
-```
-L1: roadmap.md      Human explains big picture --> LLM documents
-L2: scopes/*.md     Human explains scope --> LLM documents
-L3: tasks/{scope}/  Human requests plan --> LLM generates
-```
-
-| Layer | File | Human | LLM |
-|-------|------|-------|-----|
-| **L1 Roadmap** | roadmap.md | Explains big picture | Documents |
-| **L2 Scope** | scopes/{id}.md | Explains implementation scope | Documents |
-| **L3 Tasks** | tasks/{scope}/*.md | Requests + Approves | Generates plan |
-
-### Workflow Example
-
-```
-Step 1 - Roadmap (L1):
-  [Human] "Building mail service with login, signup, mail send/receive"
-  [LLM]   --> Creates roadmap.md
-
-Step 2 - Scope (L2):
-  [Human] "Signup first. Google login + native login"
-  [LLM]   --> Creates scopes/2026-scope1.md
-
-Step 3 - Tasks (L3):
-  [Human] "Plan Google Auth. Get name, email, age. Show parallel/sequential"
-  [LLM]   --> Creates tasks/2026-scope1/
-              - index.md (status, dependencies)
-              - 01-google-auth.md (parallel)
-              - 02-native-auth.md (parallel)
-              - 03-integration.md (sequential, after 01+02)
-
-Step 4 - Approval:
-  [Human] "Approved" --> LLM executes
-          "Revise X" --> LLM revises
-```
-
-### Feedback Loop
-
-```
-Execute --> Success --> Archive + Update CDD
-        --> Failure --> Feedback Report --> Human decides:
-                                            - "Revise scope" --> Re-plan
-                                            - "Proceed" --> Retry
-                                            - "Cancel" --> Archive
-```
-
-### Directory Structure
-
-SDD specs are organized by **app/software unit**, not by monorepo structure:
-
-```
-.specs/{app-name}/          # One app = one spec (may span multiple packages)
-+-- roadmap.md              # L1: Big picture
-+-- scopes/
-|   +-- 2026-S1.md          # L2: Scope definition
-+-- tasks/
-|   +-- 2026-S1/            # L3: Task plans
-|       +-- index.md        # Status, dependencies
-|       +-- 01-backend.md   # -> services/
-|       +-- 02-frontend.md  # -> apps/
-+-- history/                # Completed (90-day retention)
-```
-
----
-
-## ADD (Agent-Driven Development)
-
-> Autonomous execution with human gates
-
-ADD defines HOW agents execute approved SDD tasks.
-
-### Core Flow
-
-```
-CDD (patterns) --referenced--> SDD (tasks) --executed--> ADD (implementation)
-       ^                                                        |
-       +----------------------- feedback -----------------------+
-```
-
-### Spec-First Validation
-
-Before implementing, agent MUST check for existing spec:
-
-```
-User: "Implement X"
-         |
-         v
-Read .specs/{app-name}/roadmap.md
-         |
-    +----+----+
-    |         |
- Found     Not Found
-    |         |
-    v         v
- Read tasks/  "[!] Create spec first?"
-```
-
-### Execution Modes
-
-| Mode | Description |
-|------|-------------|
-| Single Agent | One agent handles all tasks |
-| Multi-Agent | Orchestrator distributes parallel tasks |
-| Git Worktree | Isolated branches for parallel work |
-
-### Self-Resolution Protocol
-
-```
-Problem encountered:
-  1. Self-resolve (re-read CDD, search codebase, run tests)
-  2. Peer consensus (if multi-agent)
-  3. Incident report --> Human intervention
-
-Human does NOT write code. Instead:
-  - Update CDD (missing pattern)
-  - Update SDD (unclear requirement)
-  - Restart agent
-```
-
-### Experience Capitalization
-
-```
-Task completed --> Extract patterns --> Update CDD --> Future agents benefit
-```
-
----
-
-## Project Structure
+### Project Structure
 
 ```
 vibe-coding-starter/
-+-- .ai/                     # CDD Tier 1 (pointers, <=50 lines)
-|   +-- README.md            # Entry point
++-- .ai/                     # CDD Tier 1: Quick pointers (<=50 lines)
+|   +-- README.md            # Entry point for LLM
 |   +-- workflows/           # implementation, review, incident
-|   +-- services/            # Service context
-|   +-- apps/                # App context
+|   +-- services/            # Service-specific context
+|   +-- apps/                # App-specific context
 |
-+-- .specs/                  # SDD (3-layer structure, per app)
++-- .specs/                  # SDD: 3-layer specs per app
 |   +-- {app-name}/          # One spec per app/software
 |       +-- roadmap.md       # L1: Big picture
 |       +-- scopes/          # L2: Scope definitions
-|       +-- tasks/           # L3: Task plans (may span packages)
+|       +-- tasks/           # L3: Task plans
 |       +-- history/         # Completed archive
 |
-+-- docs/llm/                # CDD Tier 2 (SSOT, <=300 lines)
++-- docs/llm/                # CDD Tier 2: Full methodology specs (<=300 lines)
 |   +-- policies/            # cdd.md, sdd.md, add.md
 |   +-- guides/              # Implementation guides
-|   +-- references/          # External research
-|
-+-- docs/en/                 # CDD Tier 3 (generated)
-+-- docs/{locale}/           # CDD Tier 4 (translated)
 |
 +-- apps/                    # Frontend applications
 +-- services/                # Backend services
 +-- packages/                # Shared packages
 |
-+-- infra/                   # GitOps (ArgoCD)
-|   +-- clusters/            # Cluster configs
-|   +-- apps/                # App deployments
-|   +-- platform/            # Platform services
-|   +-- infrastructure/      # Core infra
++-- infra/                   # Enterprise Blueprint (see below)
 |
-+-- AGENTS.md                # ADD router
-+-- CLAUDE.md.example        # Claude-specific config
-+-- GEMINI.md.example        # Gemini-specific config
++-- AGENTS.md                # ADD router for LLM agents
 ```
+
+### Directory Purposes
+
+| Directory | Purpose | Audience |
+|-----------|---------|----------|
+| `.ai/` | Quick context pointers, token-optimized | LLM |
+| `.specs/` | Development specs (roadmap, scope, tasks) | LLM + Human |
+| `docs/llm/` | Full methodology specs (SSOT) | LLM |
+| `apps/`, `services/` | Implementation code | Human + LLM |
+
+### About `infra/` (Enterprise Blueprint)
+
+This directory is **not for immediate execution** but serves as a high-quality **blueprint** demonstrating enterprise-grade GitOps patterns.
+
+It shows how application code and infrastructure code coexist in a mature DevOps monorepo:
+
+```
+infra/
++-- clusters/            # Cluster configurations
++-- apps/                # Application deployments
++-- platform/            # Platform services (monitoring, CI/CD)
++-- infrastructure/      # Core infrastructure
+```
+
+For senior developers, this blueprint provides a valuable template that can be directly applied or adapted to production environments.
 
 ---
 
-## Getting Started
+## 4. The First Engagement
 
-### 1. Clone & Setup
+Experience the CDD -> SDD -> ADD cycle using Claude Code.
+
+### Prerequisites
 
 ```bash
 git clone https://github.com/beegy-labs/vibe-coding-starter.git my-project
 cd my-project
-pnpm install
 ```
 
-### 2. Configure Agent (Claude Code)
+### Tutorial: Create and Execute Your First Spec
 
-Open Claude Code in the project directory:
+**Step 1: Initialize Claude Code**
+
 ```bash
 claude
 ```
 
-Then configure CLAUDE.md:
+Then configure your agent:
+
 ```
 Read @AGENTS.md and create CLAUDE.md for this project.
 ```
 
-### 3. Start Development
+**Step 2: Create Roadmap (SDD L1)**
+
+Tell Claude Code what you want to build:
 
 ```
-Read @.ai/README.md first.
+I want to build a hash utility service.
+Features: SHA256 hash generation, input validation.
+Tech stack: Rust with Axum.
+Create the roadmap in .specs/hash-service/
 ```
 
-### 4. Create Your First Spec
+**Step 3: Define Scope (SDD L2)**
+
+Define implementation scope:
 
 ```
-Human: "I'm building a user service with login, signup, profile management"
-LLM:   --> Creates .specs/services/user-service/roadmap.md
+First scope: basic hash endpoint.
+- GET /hash?input=text returns SHA256 hash
+- Input validation (non-empty, max 1000 chars)
+Create scope in .specs/hash-service/scopes/2026-S1.md
 ```
 
----
+**Step 4: Generate Tasks (SDD L3)**
 
-## Claude Code Quick Commands
+Request task breakdown:
 
-### Setup
+```
+Plan the implementation with parallel/sequential tasks.
+Show dependencies clearly.
+Create tasks in .specs/hash-service/tasks/2026-S1/
+```
+
+**Step 5: Review and Approve**
+
+Review the generated specs, then:
+
+```
+Approved. Implement all tasks.
+```
+
+**Step 6: Verify Results**
+
+After implementation:
 
 ```bash
-# Open Claude Code
-claude
+# Run tests
+cargo test
 
-# Then configure (inside Claude Code)
-> Read @AGENTS.md and create CLAUDE.md for this project.
+# Start server
+cargo run
+
+# Test endpoint
+curl "http://localhost:8080/hash?input=hello"
 ```
 
-### Run Example (Todo App)
+**Step 7: Complete the Cycle (Archive + CDD Update)**
 
-Pre-built specs are available in `.specs/example-todo/`. Execute with Claude Code:
-
-```bash
-# 1. Read context and specs
-claude "Read @.ai/README.md and @.specs/example-todo/roadmap.md"
-
-# 2. Implement all tasks
-claude "Implement tasks in @.specs/example-todo/tasks/2026-S1/"
-
-# 3. Run the stack
-pnpm --filter example-service dev  # localhost:8000
-pnpm --filter example-app dev      # localhost:5173
-
-# 4. After completion: Archive and update CDD
-claude "Archive completed tasks to history/ and update CDD with new patterns."
-```
-
-### Create New Spec
-
-```bash
-# L1: Roadmap - Human explains, LLM documents
-claude "I want to build a payment app with Stripe integration. Create roadmap in .specs/payment-app/"
-
-# L2: Scope - Human explains scope, LLM documents
-claude "First scope: basic checkout flow. Create scope."
-
-# L3: Tasks - Human requests plan, LLM generates
-claude "Plan the checkout implementation with parallel/sequential tasks."
-
-# Execute approved tasks
-claude "Implement tasks in @.specs/payment-app/tasks/2026-S1/"
-```
-
-### Workflow Commands
-
-| Command | Description |
-|---------|-------------|
-| `claude "@.ai/README.md"` | Load project context |
-| `claude "Implement @.specs/{app-name}/tasks/{scope}/"` | Execute task plan |
-| `claude "Archive and update CDD"` | Post-completion: archive + extract patterns |
-| `claude "Review PR #123"` | Code review |
-| `claude "What's the status of current tasks?"` | Check progress |
-
----
-
-## Multi-Project Workflow
-
-A senior developer's day:
-
-| Time | Activity | Tool |
-|------|----------|------|
-| 08:00 | Review PRs during commute | Mobile GitHub |
-| 09:00 | Approve Project A spec | Claude Code |
-| 10:00 | Review Project B architecture | IDE |
-| 12:00 | Approve Project C deployment | ArgoCD |
-| 14:00 | Code review for Project A | GitHub |
-| 16:00 | Review Project D results | Claude Code |
-| 18:00 | Assign next day's work | Mobile |
-
----
-
-## Scaling Strategy
+After successful implementation, complete the feedback loop:
 
 ```
-Phase 1: 1 Senior + LLM --> 1-2 Projects
-Phase 2: 2 Seniors + LLM --> 3-5 Projects
-Phase 3: 3 Seniors + Platform Engineer + LLM --> 5-10 Projects + Platform
+Move completed tasks to .specs/hash-service/history/2026-S1/.
+If reusable patterns emerged, update CDD (SSOT):
+- Standardized patterns -> docs/llm/guides/
+- Architecture decisions -> docs/llm/references/
 ```
+
+Note: Only **generalized, reusable patterns** belong in CDD. Task-specific details stay in `.specs/history/`.
+
+### Quick Reference
+
+| Phase | Claude Code Prompt |
+|-------|-------------------|
+| Load context | `Read @.ai/README.md` |
+| Create roadmap | `I want to build X. Create roadmap in .specs/X/` |
+| Define scope | `First scope: Y. Create scope.` |
+| Generate tasks | `Plan implementation with parallel/sequential tasks.` |
+| Execute | `Approved. Implement all tasks.` |
+| Archive | `Move completed tasks to history/{scope}/` |
+| Update CDD | `Extract reusable patterns and update docs/llm/ (guides or references)` |
 
 ---
 
 ## References
 
 - [llm-dev-protocol](https://github.com/beegy-labs/llm-dev-protocol) - Policy source
-- [Addy Osmani - LLM Coding Workflow 2026](https://addyosmani.com/blog/ai-coding-workflow/)
 - [Anthropic - Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
 - [Thoughtworks - Spec-Driven Development](https://www.thoughtworks.com/insights/blog/agile-engineering-practices/spec-driven-development-unpacking-2025-new-engineering-practices)
 

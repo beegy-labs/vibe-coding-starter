@@ -4,4 +4,4 @@
 
 | Service | Path | Keywords |
 |---------|------|----------|
-| Example Service | example-service.md | node, backend, api |
+| (none) | - | Add your services here |
