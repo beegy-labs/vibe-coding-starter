@@ -128,14 +128,17 @@ When needed:
 ## Experience Capitalization
 
 ```
-Task done -> Extract patterns -> Update CDD -> Future agents benefit
+Task done -> Archive to history/ -> Extract reusable patterns -> Update CDD (SSOT)
 ```
+
+Only generalized, reusable patterns belong in CDD:
 
 | Category | Example | Update |
 |----------|---------|--------|
-| New pattern | API pattern | guides/ |
-| Bug fix | Error solution | tech/ |
-| Decision | Why X over Y | references/ |
+| Standardized pattern | API pattern, workflow | guides/ |
+| Architecture decision | Why X over Y | references/ |
+
+Task-specific details remain in `.specs/history/`.
 
 ## Agent Config
 

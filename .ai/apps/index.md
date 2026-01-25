@@ -4,4 +4,4 @@
 
 | App | Path | Keywords |
 |-----|------|----------|
-| Example App | example-app.md | react, frontend, web |
+| (none) | - | Add your apps here |
