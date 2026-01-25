@@ -1,0 +1,77 @@
+# CLAUDE.md
+
+> Claude Code specific configuration | Extends [AGENTS.md](AGENTS.md)
+
+## Model Preferences
+
+```yaml
+default: claude-sonnet-4-20250514
+complex_tasks: claude-opus-4-20250514
+quick_tasks: claude-haiku
+```
+
+## Claude Code Commands
+
+```bash
+# Start session with context
+claude "Read @.ai/README.md and @.specs/{service}/index.md"
+
+# Implementation with spec check
+claude "Implement {feature} - check spec first per .ai/workflows/implementation.md"
+
+# Code review
+claude "Review changes in this PR per .ai/workflows/review.md"
+```
+
+## Prompt Patterns
+
+### Starting Work
+```
+@.ai/README.md Read project context.
+@.specs/{service}/index.md Check current tasks.
+```
+
+### Implementation Request
+```
+Implement {feature}.
+- Follow .ai/workflows/implementation.md
+- If no spec exists, create SDD first
+```
+
+### Problem Resolution
+```
+Error: {error message}
+- Follow .ai/workflows/incident.md
+- Attempt self-resolution before asking
+```
+
+## MCP Servers (Optional)
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-filesystem", "/path/to/project"]
+    }
+  }
+}
+```
+
+## Token Optimization
+
+| Context | Max Tokens | Strategy |
+|---------|------------|----------|
+| Initial | Read .ai/README.md only | Minimal start |
+| Working | Add .specs/{service}/index.md | On-demand |
+| Deep dive | Add specific spec files | As needed |
+
+## Custom Instructions
+
+Add any project-specific Claude instructions here:
+
+```
+# Example: Always use Korean for comments
+- Write code comments in Korean
+- Use English for variable/function names
+```

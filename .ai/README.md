@@ -1,50 +1,47 @@
-# Example Project
+# Vibe Coding Starter
 
-> CDD Tier 1 - Indicator (≤50 lines) | Multi-LLM Compatible
-
-## Project Overview
-
-Full-stack monorepo project template
+> CDD Tier 1 - Entry Point (<=50 lines)
 
 ## Tech Stack
 
-| Layer    | Technology          |
-| -------- | ------------------- |
-| Frontend | React, TypeScript   |
-| Backend  | Node.js, TypeScript |
-| Database | PostgreSQL          |
-| Infra    | Docker, Kubernetes  |
+| Layer | Tech |
+|-------|------|
+| Frontend | React, TypeScript |
+| Backend | Python, Node.js |
+| DB | PostgreSQL, SQLite |
 
-## Architecture
+## Navigation
 
-```
-apps/           → Frontend applications
-services/       → Backend microservices
-packages/       → Shared libraries
-```
+| Action | Read |
+|--------|------|
+| Current work | `.specs/{app-name}/tasks/` |
+| Patterns | `docs/llm/policies/` |
+| Workflows | `.ai/workflows/` |
 
-## Key References
+## Methodology
 
-| Context              | File                            |
-| -------------------- | ------------------------------- |
-| Architecture         | `.ai/architecture.md`           |
-| App: example-app     | `.ai/apps/example-app.md`       |
-| Service: example     | `.ai/services/example-service.md` |
-| Current Scope        | `.specs/apps/example-app/scopes/2026-Q1.md` |
-| Current Tasks        | `.specs/apps/example-app/tasks/2026-Q1.md` |
+| Phase | Location | Focus |
+|-------|----------|-------|
+| CDD | `.ai/`, `docs/llm/` | HOW (patterns) |
+| SDD | `.specs/` | WHAT (tasks) |
+| ADD | `AGENTS.md` | DO (execute) |
 
-## Policies (SSOT)
+## SDD 3-Layer
 
-| Policy | Location                                |
-| ------ | --------------------------------------- |
-| CDD    | `docs/llm/policies/cdd.md`              |
-| SDD    | `docs/llm/policies/sdd.md`              |
-| ADD    | `docs/llm/policies/add.md`              |
+| Layer | File | Human | LLM |
+|-------|------|-------|-----|
+| L1 | roadmap.md | Explains | Documents |
+| L2 | scopes/*.md | Explains | Documents |
+| L3 | tasks/{scope}/ | Requests | Generates |
 
-## Quick Commands
+## Policies
 
-```bash
-pnpm dev          # Development
-pnpm build        # Build all
-pnpm test         # Run tests
-```
+| Doc | Path |
+|-----|------|
+| CDD | `docs/llm/policies/cdd.md` |
+| SDD | `docs/llm/policies/sdd.md` |
+| ADD | `docs/llm/policies/add.md` |
+
+## Commands
+
+`pnpm dev` | `pnpm build` | `pnpm test`

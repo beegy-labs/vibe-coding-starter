@@ -1,56 +1,47 @@
 # Example Service Context
 
-> CDD Tier 1 - Service Context
+> Tier 1 - Service Context
 
 ## Overview
 
-Node.js-based backend service
+Python backend service with FastAPI + SQLModel
 
 ## Tech Stack
 
-- Node.js 20+
-- TypeScript
-- Express / Fastify
-- Prisma (ORM)
-- PostgreSQL
+| Tech | Purpose |
+|------|---------|
+| Python 3.11+ | Runtime |
+| FastAPI | Framework |
+| SQLModel | ORM |
+| SQLite | Database (dev) |
 
-## Directory Structure
+## Structure
 
 ```
-services/example-service/
-├── src/
-│   ├── controllers/    # Request handlers
-│   ├── services/       # Business logic
-│   ├── repositories/   # Data access
-│   ├── middleware/     # Middleware
-│   ├── utils/          # Utilities
-│   └── index.ts        # Entry point
-├── prisma/
-│   └── schema.prisma   # DB schema
-├── package.json
-└── Dockerfile
+services/example-service/src/
++-- main.py        # FastAPI app entry
++-- models/        # SQLModel models
++-- db/            # Database setup
++-- api/routes/    # API endpoints
 ```
 
 ## Commands
 
 ```bash
-pnpm --filter example-service dev      # Dev server
-pnpm --filter example-service build    # Build
-pnpm --filter example-service test     # Test
-pnpm --filter example-service prisma:generate  # Generate Prisma client
+pnpm --filter example-service dev    # localhost:8000
+pnpm --filter example-service test
 ```
 
-## API Endpoints
+## Endpoints
 
-| Method | Path         | Description  |
-| ------ | ------------ | ------------ |
-| GET    | /health      | Health check |
-| GET    | /api/v1/...  | API endpoints |
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /health | Health check |
+| GET | /todos | List todos |
+| POST | /todos | Create todo |
+| PATCH | /todos/:id | Update todo |
+| DELETE | /todos/:id | Delete todo |
 
-## Environment Variables
+## Current Work
 
-```bash
-DATABASE_URL=postgresql://...
-PORT=3000
-NODE_ENV=development
-```
+See `.specs/example-todo/tasks/2026-S1/` (Task 01)

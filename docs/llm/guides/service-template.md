@@ -6,21 +6,21 @@
 
 ```
 services/{service-name}/
-├── src/
-│   ├── controllers/
-│   │   └── health.controller.ts
-│   ├── services/
-│   ├── repositories/
-│   ├── middleware/
-│   │   ├── error.middleware.ts
-│   │   └── logging.middleware.ts
-│   ├── utils/
-│   └── index.ts
-├── prisma/
-│   └── schema.prisma
-├── Dockerfile
-├── package.json
-└── tsconfig.json
++-- src/
+|   +-- controllers/
+|   |   +-- health.controller.ts
+|   +-- services/
+|   +-- repositories/
+|   +-- middleware/
+|   |   +-- error.middleware.ts
+|   |   +-- logging.middleware.ts
+|   +-- utils/
+|   +-- index.ts
++-- prisma/
+|   +-- schema.prisma
++-- Dockerfile
++-- package.json
++-- tsconfig.json
 ```
 
 ## package.json Template

@@ -1,0 +1,83 @@
+# GEMINI.md
+
+> Gemini CLI specific configuration | Extends [AGENTS.md](AGENTS.md)
+
+## Model Preferences
+
+```yaml
+default: gemini-2.0-flash
+complex_tasks: gemini-2.0-pro
+```
+
+## Gemini CLI Commands
+
+```bash
+# Start session with context
+gemini chat --context ".ai/README.md,.specs/{service}/index.md"
+
+# Code review
+gemini review --files "src/**/*.ts"
+
+# Generate documentation
+gemini generate --template ".ai/templates/doc.md" --output "docs/"
+```
+
+## Prompt Patterns
+
+### Starting Work
+```
+Context files:
+- .ai/README.md
+- .specs/{service}/index.md
+
+Task: {description}
+```
+
+### Implementation Request
+```
+Implement {feature}.
+Workflow: .ai/workflows/implementation.md
+Check spec exists before coding.
+```
+
+### Code Review
+```
+Review the following changes:
+{diff}
+
+Checklist per .ai/workflows/review.md
+```
+
+## API Configuration (Optional)
+
+```bash
+# Set API key
+export GEMINI_API_KEY=your_key_here
+
+# Or use config file
+cat > ~/.gemini/config.json << EOF
+{
+  "apiKey": "your_key_here",
+  "defaultModel": "gemini-2.0-flash"
+}
+EOF
+```
+
+## Integration with Claude Code
+
+| Task | Primary | Secondary |
+|------|---------|-----------|
+| Complex implementation | Claude Code | - |
+| Code review | Gemini CLI | Claude Code |
+| Documentation | Gemini CLI | - |
+| Consensus validation | Both | Compare outputs |
+
+## Custom Instructions
+
+Add any project-specific Gemini instructions here:
+
+```
+# Example: Focus on performance
+- Prioritize performance in code suggestions
+- Flag potential N+1 queries
+```

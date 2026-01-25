@@ -1,53 +1,45 @@
 # Architecture Overview
 
-> CDD Tier 1 - Architecture Context
+> Tier 1 - Architecture Context (<=50 lines)
 
-## System Architecture
+## System Layers
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        Frontend                              │
-│  ┌─────────────┐                                            │
-│  │ example-app │  React + TypeScript                        │
-│  └──────┬──────┘                                            │
-└─────────┼───────────────────────────────────────────────────┘
-          │ HTTP/REST
-┌─────────┼───────────────────────────────────────────────────┐
-│         ▼              Backend                               │
-│  ┌─────────────────┐                                        │
-│  │ example-service │  Node.js + TypeScript                  │
-│  └────────┬────────┘                                        │
-└───────────┼─────────────────────────────────────────────────┘
-            │
-┌───────────┼─────────────────────────────────────────────────┐
-│           ▼           Database                               │
-│    ┌────────────┐                                           │
-│    │ PostgreSQL │                                           │
-│    └────────────┘                                           │
-└─────────────────────────────────────────────────────────────┘
+Frontend (apps/)     -> HTTP/REST -> Backend (services/)
+                                          |
+                                          v
+                                     Database (PostgreSQL)
 ```
 
 ## Package Dependencies
 
 ```
 packages/shared
-    ↑
-    ├── apps/example-app
-    └── services/example-service
+    ^
+    +-- apps/*
+    +-- services/*
 ```
 
 ## Directory Conventions
 
-| Directory  | Purpose              | Example                    |
-| ---------- | -------------------- | -------------------------- |
-| `apps/`    | Frontend apps        | `apps/example-app/`        |
-| `services/`| Backend services     | `services/example-service/`|
-| `packages/`| Shared libraries     | `packages/shared/`         |
+| Directory | Purpose | Example |
+|-----------|---------|---------|
+| `apps/` | Frontend | `apps/example-app/` |
+| `services/` | Backend | `services/example-service/` |
+| `packages/` | Shared | `packages/shared/` |
 
-## Environment
+## Environments
 
-| Env         | Purpose     |
-| ----------- | ----------- |
-| development | Local dev   |
-| staging     | QA testing  |
-| production  | Live        |
+| Env | Purpose |
+|-----|---------|
+| development | Local dev |
+| staging | QA testing |
+| production | Live |
+
+## Infrastructure
+
+| Component | Location |
+|-----------|----------|
+| GitOps | `infra/` |
+| Clusters | `infra/clusters/` |
+| Platform | `infra/platform/` |

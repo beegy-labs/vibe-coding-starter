@@ -1,0 +1,39 @@
+name: Documentation Compliance Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  docs-check:
+    name: Check Documentation Updated
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Documentation Check
+        run: |
+          chmod +x scripts/check-docs-updated.sh
+          ./scripts/check-docs-updated.sh
+
+      - name: Post Check Summary
+        if: always()
+        run: |
+          echo "## 📋 Documentation Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Count changes
+          SPEC_COUNT=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -c '^\.specs/' || echo 0)
+          DOC_COUNT=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -c '^docs/llm/' || echo 0)
+          SRC_COUNT=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -c '^(apps|services|packages)/' || echo 0)
+
+          echo "| Category | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Source files | $SRC_COUNT |" >> $GITHUB_STEP_SUMMARY
+          echo "| Spec files | $SPEC_COUNT |" >> $GITHUB_STEP_SUMMARY
+          echo "| Doc files | $DOC_COUNT |" >> $GITHUB_STEP_SUMMARY

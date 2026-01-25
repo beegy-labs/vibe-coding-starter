@@ -4,46 +4,42 @@
 
 ## Overview
 
-React-based frontend application
+React Todo application (connects to example-service)
 
 ## Tech Stack
 
-- React 18+
-- TypeScript
-- Vite
-- TailwindCSS
+| Tech | Purpose |
+|------|---------|
+| React 18+ | UI |
+| TypeScript | Language |
+| Vite | Build |
+| TailwindCSS | Style |
 
-## Directory Structure
+## Structure (2026 Best Practices)
 
 ```
-apps/example-app/
-├── src/
-│   ├── components/     # UI components
-│   ├── pages/          # Page components
-│   ├── hooks/          # Custom hooks
-│   ├── services/       # API calls
-│   ├── stores/         # State management
-│   └── utils/          # Utilities
-├── public/
-├── package.json
-└── vite.config.ts
+apps/example-app/src/
++-- components/    # UI components
++-- hooks/         # Custom hooks
++-- services/      # API client
++-- types/         # TypeScript types
++-- styles/        # Global styles
 ```
 
 ## Commands
 
 ```bash
-pnpm --filter example-app dev      # Dev server
-pnpm --filter example-app build    # Build
-pnpm --filter example-app test     # Test
+pnpm --filter example-app dev    # localhost:5173
+pnpm --filter example-app build
+pnpm --filter example-app test
 ```
 
-## API Integration
+## API
 
 ```typescript
-// Communicates with services/example-service
-const API_BASE = import.meta.env.VITE_API_URL;
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 ```
 
-## Current Focus
+## Current Work
 
-- See `.specs/apps/example-app/scopes/2026-Q1.md`
+See `.specs/example-todo/tasks/2026-S1/` (Task 02, 03)
