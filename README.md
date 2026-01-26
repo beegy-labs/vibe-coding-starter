@@ -187,9 +187,10 @@ Tell Claude Code what you want to build:
 I want to build a hash utility service.
 Features: SHA256 hash generation, input validation.
 Tech stack: Rust with Axum.
-Implementation target: services/hash-service/
 Create the roadmap in .specs/hash-service/
 ```
+
+The roadmap.md will include a Tech Stack table with implementation locations (e.g., `services/`, `apps/`).
 
 **Step 3: Define Scope (SDD L2)**
 
@@ -209,18 +210,32 @@ Request task breakdown:
 ```
 Plan the implementation with parallel/sequential tasks.
 Show dependencies clearly.
+Include project setup task with target directory.
 Create tasks in .specs/hash-service/tasks/2026-S1/
 ```
 
+LLM generates tasks including:
+- `01-project-setup.md`: Create `services/hash-service/` with Cargo.toml
+- `02-core-logic.md`: Implement hash function
+- `03-api-endpoint.md`: Create /hash endpoint
+- `04-testing.md`: Write tests
+- `05-cdd-update.md`: Update CDD T1 (.ai/) and T2 (docs/llm/)
+- `06-archive.md`: Move completed tasks to history/
+
 **Step 5: Review and Approve**
 
-Review the generated specs, then:
+Review the generated tasks, **especially the target directory in setup task**:
 
 ```
-Approved. Implement all tasks in services/hash-service/.
+# Check tasks - verify service location is correct
+Read .specs/hash-service/tasks/2026-S1/
+
+# If location is wrong, request revision
+# If correct, approve
+Approved. Implement all tasks.
 ```
 
-Note: Backend code goes to `services/`, frontend code goes to `apps/`.
+Human reviews and approves the implementation plan including service location.
 
 **Step 6: Verify Results**
 
@@ -239,23 +254,17 @@ cargo run
 curl "http://localhost:3000/hash?input=hello"
 ```
 
-**Step 7: Complete the Cycle (Archive + CDD Update)**
+**Step 7: Complete the Cycle (Already in Tasks)**
 
-After successful implementation, **always** update CDD Tier 1 and Tier 2:
+CDD update and archive are **already planned in tasks** (05-cdd-update.md, 06-archive.md).
 
-```
-# Tier 1: Add service pointer (.ai/)
-Create .ai/services/hash-service.md with service context (tech stack, endpoints, dependencies).
+When LLM executes all tasks, it will:
+- Create `.ai/services/hash-service.md` (T1 pointer)
+- Update `.ai/services/index.md`
+- Update `docs/llm/guides/` if new patterns (T2 SSOT)
+- Move completed tasks to `.specs/hash-service/history/2026-S1/`
 
-# Tier 2: Update SSOT (docs/llm/)
-Update docs/llm/guides/ with implementation patterns used.
-Add to .ai/services/index.md
-
-# Archive completed tasks
-Move completed tasks to .specs/hash-service/history/2026-S1/.
-```
-
-Note: CDD Tier 1/2 update is **mandatory** after SDD completion. This ensures future agents have up-to-date context.
+All documentation is written by LLM. Human only explains and approves.
 
 ### Quick Reference
 
@@ -264,11 +273,11 @@ Note: CDD Tier 1/2 update is **mandatory** after SDD completion. This ensures fu
 | Load context | `Read @.ai/README.md` |
 | Create roadmap | `I want to build X. Create roadmap in .specs/X/` |
 | Define scope | `First scope: Y. Create scope.` |
-| Generate tasks | `Plan implementation with parallel/sequential tasks.` |
-| Execute | `Approved. Implement all tasks in services/X/.` |
-| Update CDD T1 | `Create .ai/services/{name}.md and update index.md` |
-| Update CDD T2 | `Update docs/llm/guides/ with patterns used` |
-| Archive | `Move completed tasks to .specs/{app}/history/{scope}/` |
+| Generate tasks | `Plan tasks including setup, implementation, CDD update, and archive.` |
+| Review | `Read .specs/X/tasks/ and verify plan` |
+| Execute | `Approved. Implement all tasks.` |
+
+Note: CDD update (T1/T2) and archive are included in generated tasks, not separate steps.
 
 ---
 
