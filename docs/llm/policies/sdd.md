@@ -62,7 +62,7 @@ L3: [Human] "Plan with parallel tasks for backend/frontend, then integration"
 [Human] "Approved" -> Execute
         "Revise X" -> LLM revises
 
-Execute -> Success -> Archive to history/ + CDD update (if reusable patterns)
+Execute -> Success -> CDD T1/T2 update (mandatory) -> Archive to history/
         -> Failure -> Feedback -> Human decides
 ```
 
@@ -200,8 +200,9 @@ Failure -> Feedback Report -> Human Review
 |--------|--------|
 | Coverage | >=80% |
 | Tasks | 100% done |
+| CDD T1 | .ai/ pointer added |
+| CDD T2 | docs/llm/ SSOT updated |
 | Archive | Moved to history/ |
-| CDD | Updated (if reusable patterns) |
 
 ## Best Practices
 

@@ -241,16 +241,21 @@ curl "http://localhost:3000/hash?input=hello"
 
 **Step 7: Complete the Cycle (Archive + CDD Update)**
 
-After successful implementation, complete the feedback loop:
+After successful implementation, **always** update CDD Tier 1 and Tier 2:
 
 ```
+# Tier 1: Add service pointer (.ai/)
+Create .ai/services/hash-service.md with service context (tech stack, endpoints, dependencies).
+
+# Tier 2: Update SSOT (docs/llm/)
+Update docs/llm/guides/ with implementation patterns used.
+Add to .ai/services/index.md
+
+# Archive completed tasks
 Move completed tasks to .specs/hash-service/history/2026-S1/.
-If reusable patterns emerged, update CDD (SSOT):
-- Standardized patterns -> docs/llm/guides/
-- Architecture decisions -> docs/llm/references/
 ```
 
-Note: Only **generalized, reusable patterns** belong in CDD. Task-specific details stay in `.specs/history/`.
+Note: CDD Tier 1/2 update is **mandatory** after SDD completion. This ensures future agents have up-to-date context.
 
 ### Quick Reference
 
@@ -261,8 +266,9 @@ Note: Only **generalized, reusable patterns** belong in CDD. Task-specific detai
 | Define scope | `First scope: Y. Create scope.` |
 | Generate tasks | `Plan implementation with parallel/sequential tasks.` |
 | Execute | `Approved. Implement all tasks in services/X/.` |
-| Archive | `Move completed tasks to history/{scope}/` |
-| Update CDD | `Extract reusable patterns and update docs/llm/ (guides or references)` |
+| Update CDD T1 | `Create .ai/services/{name}.md and update index.md` |
+| Update CDD T2 | `Update docs/llm/guides/ with patterns used` |
+| Archive | `Move completed tasks to .specs/{app}/history/{scope}/` |
 
 ---
 
