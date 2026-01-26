@@ -128,17 +128,17 @@ When needed:
 ## Experience Capitalization
 
 ```
-Task done -> Archive to history/ -> Extract reusable patterns -> Update CDD (SSOT)
+Task done -> Update CDD T1/T2 (mandatory) -> Archive to history/
 ```
 
-Only generalized, reusable patterns belong in CDD:
+**Mandatory** after SDD completion:
 
-| Category | Example | Update |
-|----------|---------|--------|
-| Standardized pattern | API pattern, workflow | guides/ |
-| Architecture decision | Why X over Y | references/ |
+| Tier | Action | Example |
+|------|--------|---------|
+| T1 | Add pointer to .ai/services/ | {service}.md + index.md |
+| T2 | Update SSOT in docs/llm/ | guides/, references/ |
 
-Task-specific details remain in `.specs/history/`.
+Then archive completed tasks to `.specs/{app}/history/`.
 
 ## Agent Config
 
