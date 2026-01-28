@@ -281,9 +281,24 @@ Note: CDD update (T1/T2) and archive are included in generated tasks, not separa
 
 ---
 
+## Policy Sync
+
+This project uses shared development policies from [agentic-dev-protocol](https://github.com/beegy-labs/agentic-dev-protocol).
+
+| Policy | Description |
+|--------|-------------|
+| CDD | Context-Driven Development |
+| SDD | Spec-Driven Development |
+| ADD | Agent-Driven Development |
+
+**Auto-sync**: GitHub Actions updates policies every 6 hours.
+**Manual sync**: Actions → Update Policy Submodule → Run workflow
+
+---
+
 ## References
 
-- [llm-dev-protocol](https://github.com/beegy-labs/llm-dev-protocol) - Policy source
+- [agentic-dev-protocol](https://github.com/beegy-labs/agentic-dev-protocol) - Policy source (SSOT)
 - [Anthropic - Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
 - [Thoughtworks - Spec-Driven Development](https://www.thoughtworks.com/insights/blog/agile-engineering-practices/spec-driven-development-unpacking-2025-new-engineering-practices)
 
