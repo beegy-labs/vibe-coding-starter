@@ -38,9 +38,14 @@
 
 | Doc | Path |
 |-----|------|
+| Identity | `docs/llm/policies/identity.md` |
+| Methodology | `docs/llm/policies/development-methodology.md` |
 | CDD | `docs/llm/policies/cdd.md` |
 | SDD | `docs/llm/policies/sdd.md` |
 | ADD | `docs/llm/policies/add.md` |
+| Token Optimization | `docs/llm/policies/token-optimization.md` |
+| Monorepo | `docs/llm/policies/monorepo.md` |
+| Agents Customization | `docs/llm/policies/agents-customization.md` |
 
 ## Commands
 
